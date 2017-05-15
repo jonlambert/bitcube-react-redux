@@ -1,13 +1,13 @@
 # Typescript / React / Redux (Bitcube Session)
 
 
-### Typescript
+#### Typescript
 - Pre-processors
 - Type system
 - Classes
 - Interfaces
 
-### React
+#### React
 - Components
   - HTML
 - JSX
@@ -17,7 +17,7 @@
 - Containers: Keeping data in the containers, components are dumb
 - Uni-directional data flow (functions are passed down to components)
 
-### Redux
+#### Redux
 - State object
 - Actions
 - Reducers
