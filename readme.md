@@ -1,6 +1,7 @@
 # Typescript / React / Redux (Bitcube Session)
 
-### Typescript
+
+### Typescript
 - Pre-processors
 - Type system
 - Classes
