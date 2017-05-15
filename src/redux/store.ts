@@ -1,35 +1,57 @@
-import {createStore, Action, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 
-interface AppAction {
+export module AppActions {
+  export const INCREMENT = "INCREMENT"
+  export const DECREMENT = "DECREMENT"
+}
+
+interface AppState {
+  counter: number
+}
+
+interface Action {
   type: string
   payload: any
 }
 
-module AppActions {
-  export const SAY_HELLO = "SAY_HELLO"
-}
-
-const initialState = {
-  message: 'Welcome to Toshi'
-}
-
-const appReducer = (state = {}, action: AppAction) => {
-  return {...state}
-}
-
-const logger = store => next => action => {
-  console.info(action, store.getState())
-  return next(action)
-}
-
-const changeMessage = (message: string) => {
-  return {
-    type: AppActions.SAY_HELLO,
-    payload: message
+const appReducer = (state: AppState, action: Action): AppState => {
+  switch (action.type) {
+    case AppActions.INCREMENT:
+      return {
+        ...state,
+        counter: state.counter + 1
+      }
+    case AppActions.DECREMENT:
+      return {
+        ...state,
+        counter: state.counter - 1
+      }
+    default: return {...state}
   }
 }
 
-export const configureStore = () => {
-  return createStore(appReducer, {}, applyMiddleware(logger))
+export const incrementCounter = () => {
+  return {
+    type: AppActions.INCREMENT
+  }
+}
+
+export const decrementCounter = () => {
+  return {
+    type: AppActions.DECREMENT
+  }
+}
+
+export const configureStore = (initialState: AppState) => {
+  const middleware = [
+    createLogger(),
+    // ...plus any others needed
+  ]
+
+  return createStore<AppState>(
+    appReducer, 
+    initialState, 
+    applyMiddleware(...middleware)
+  )
 }

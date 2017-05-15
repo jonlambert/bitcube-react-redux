@@ -1,30 +1,40 @@
-interface Person {
-  name: string
-  email: string
-  age: number
-}
-
-function check(person: Person): boolean {
-  return person.age > 21
-}
 
 import * as React from 'react'
-import {render} from 'react-dom'
-import {configureStore} from './redux/store'
+import * as ReactDOM from 'react-dom'
+import {configureStore, incrementCounter, decrementCounter} from './redux/store'
+import {Provider, connect} from 'react-redux'
 
-const store = configureStore()
+const Counter = ({counter}) => {
+  return <div>Counter: {counter}</div>
+}
 
-store.subscribe(() => {
-  const state = store.getState()
-  console.log('State is: ', state)
-})
+@connect(
+  state => ({
+    counter: state.counter
+  }),
+  dispatch => ({
+    increment: () => dispatch(incrementCounter()),
+    decrement: () => dispatch(decrementCounter())
+  })
+)
+class Application extends React.Component<any, any> {
+  render() {
+    return <div>
+      <Counter counter={this.props.counter} />
+      <button onClick={this.props.increment}>Increment</button>
+      <button onClick={this.props.decrement}>Decrement</button>
+    </div>
+  }
+}
 
-store.dispatch({type: 'HELLO'})
+const initialState = {
+  counter: 0 
+}
+const store = configureStore(initialState)
 
-render(
-  <div>
-    <h1>React / Redux</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facere, illum sint labore corrupti corporis sequi dolorem voluptatum assumenda quia voluptates! Itaque id alias porro nisi sint quae doloribus, voluptates.</p>
-  </div>,
+ReactDOM.render(
+  <Provider store={store}>
+    <Application />
+  </Provider>, 
   document.getElementById('root')
 )

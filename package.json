@@ -4,6 +4,9 @@
   "main": "src/app.js",
   "author": "Jon Lambert <jon@toshi.co>",
   "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
   "dependencies": {
     "@types/lodash": "^4.14.64",
     "@types/react": "^15.0.24",
